@@ -7,8 +7,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
 
-const page = async ({ params }: { params: { username: string } }) => {
-  const username = params.username;
+const page = async ({ params }: { params: Promise<{ username: string }> }) => {
+  const username = (await params).username;
 
   const user = await prisma.user.findFirst({
     where: {
@@ -40,7 +40,7 @@ const page = async ({ params }: { params: { username: string } }) => {
         followingId: currentUserId, // Count all users following this user
       },
     });
-    
+
     followingCount = await prisma.follower.count({
       where: {
         followerId: currentUserId, // Count all users this user is following
@@ -64,7 +64,7 @@ const page = async ({ params }: { params: { username: string } }) => {
   return (
     <div className="flex gap-6 pt-6">
       <div className="hidden xl:block w-[20%]">
-        <LeftMenu type="profile"/>
+        <LeftMenu type="profile" />
       </div>
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
@@ -85,7 +85,7 @@ const page = async ({ params }: { params: { username: string } }) => {
               />
             </div>
             <h1 className="mt-10 mb-4 text-2xl font-medium">
-            {user.name && user.surname
+              {user.name && user.surname
                 ? user.name + " " + user.surname
                 : user.username}
             </h1>
@@ -104,11 +104,11 @@ const page = async ({ params }: { params: { username: string } }) => {
               </div>
             </div>
           </div>
-          <Feed username={user.username}/>
+          <Feed username={user.username} />
         </div>
       </div>
       <div className="hidden lg:block w-[30%]">
-        <RightMenu user={user}/>
+        <RightMenu user={user} />
       </div>
     </div>
   );
