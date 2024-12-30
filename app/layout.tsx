@@ -21,7 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={`${inter.className}__className_d65c78 vsc-initialized bg-slate-100`}
-          data-new-gr-c-s-check-loaded="14.1214.0"
+          data-new-gr-c-s-check-loaded="14.1215.0"
           data-gr-ext-installed=""
           cz-shortcut-listen="true"
         >
